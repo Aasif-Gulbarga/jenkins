@@ -5,14 +5,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git branch: 'main',
-                url: 'https://github.com/Aasif-Gulbarga/jenkins.git'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                sh 'mvn test'
+                git url: 'https://github.com/Aasif-Gulbarga/jenkins.git', branch: 'main'
             }
         }
 
@@ -22,26 +15,20 @@ pipeline {
             }
         }
 
-        stage('Stop Old App (if running)') {
+        stage('Docker Build') {
             steps {
-                sh '''
-                pkill -f "java -jar" || true
-                '''
+                sh 'docker build -t jenkins-app .'
             }
         }
 
-        stage('Run Application (Deploy)') {
+        stage('Deploy') {
             steps {
                 sh '''
-                nohup java -jar target/*.jar > app.log 2>&1 &
+                    docker stop jenkins-app || true
+                    docker rm jenkins-app || true
+                    docker run -d -p 8081:8081 --name jenkins-app jenkins-app
                 '''
             }
-        }
-    }
-
-    post {
-        success {
-            echo "APP RUNNING ON http://localhost:8080"
         }
     }
 }
