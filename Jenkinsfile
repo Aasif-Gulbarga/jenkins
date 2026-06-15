@@ -1,36 +1,65 @@
 pipeline {
     agent any
 
-        stages {
-            stage('Clone') {
-                steps {
-                    git branch: 'main',
-                        url: 'https://github.com/Aasif-Gulbarga/jenkins.git'
-                }
+    environment {
+        IMAGE_NAME = "jenkins"
+        CONTAINER_NAME = "quirky_benz"
+        DOCKER_PORT = "8081:8081"
+    }
+
+    tools {
+        jdk 'jdk17'
+        maven 'maven3'
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Aasif-Gulbarga/jenkins.git'
+            }
+        }
+
+        stage('Build Maven') {
+            steps {
+                bat 'mvn clean package -DskipTests'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                bat 'mvn test'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                bat "docker build -t jenkins ."
+            }
+        }
+
+        stage('Stop Existing Container') {
+            steps {
+                bat '''
+                docker stop quirky_benz || exit 0
+                docker rm quirky_benz || exit 0
+                '''
+            }
+        }
+
+        stage('Run Container') {
+            steps {
+                bat "docker run -d --name quirky_benz -p 8080 jenkins"
             }
         }
     }
 
-        stage('Build') {
-            steps {
-                sh 'mvn clean package -DskipTests'
-            }
+    post {
+        success {
+            echo 'Build & Deployment Successful!'
         }
-
-        stage('Docker Build') {
-            steps {
-                sh 'docker build -t jenkins-app .'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                sh '''
-                    docker stop jenkins-app || true
-                    docker rm jenkins-app || true
-                    docker run -d -p 8081:8081 --name jenkins-app jenkins-app
-                '''
-            }
+        failure {
+            echo 'Build Failed!'
         }
     }
 }
