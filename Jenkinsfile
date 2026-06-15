@@ -1,30 +1,52 @@
 pipeline {
     agent any
 
+    tools {
+        jdk 'AmazonCorretto17'
+        maven 'Maven3'
+    }
+
     stages {
 
         stage('Checkout') {
             steps {
-                echo 'Checking out code'
-            }
-        }
-
-        stage('Build') {
-            steps {
-                echo 'Building application'
+                git branch: 'main',
+                url: 'https://github.com/Aasif-Gulbarga/jenkins.git'
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Running tests'
+                sh 'mvn test'
             }
         }
 
-        stage('Deploy') {
+        stage('Build') {
             steps {
-                echo 'Deploying application'
+                sh 'mvn clean package -DskipTests'
             }
+        }
+
+        stage('Stop Old App (if running)') {
+            steps {
+                sh '''
+                pkill -f "java -jar" || true
+                '''
+            }
+        }
+
+        stage('Run Application (Deploy)') {
+            steps {
+                sh '''
+                nohup java -jar target/*.jar > app.log 2>&1 &
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "APP RUNNING ON http://localhost:8080"
         }
     }
 }
