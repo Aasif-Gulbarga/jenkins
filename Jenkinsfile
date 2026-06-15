@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        jdk 'AmazonCorretto17'
+        jdk 'Jdk-17'
         maven 'Maven3'
     }
 
