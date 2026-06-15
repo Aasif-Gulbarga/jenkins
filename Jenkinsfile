@@ -1,13 +1,15 @@
 pipeline {
     agent any
 
-    stages {
-
-        stage('Checkout') {
-            steps {
-                git url: 'https://github.com/Aasif-Gulbarga/jenkins.git', branch: 'main'
+        stages {
+            stage('Clone') {
+                steps {
+                    git branch: 'main',
+                        url: 'https://github.com/Aasif-Gulbarga/jenkins.git'
+                }
             }
         }
+    }
 
         stage('Build') {
             steps {
