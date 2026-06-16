@@ -10,7 +10,7 @@ pipeline {
     tools {
         jdk 'jdk17'
         maven 'maven3'
-        git 'Default'
+        git 'git-default'
     }
 
     stages {
