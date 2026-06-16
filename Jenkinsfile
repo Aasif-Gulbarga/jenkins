@@ -10,6 +10,7 @@ pipeline {
     tools {
         jdk 'jdk17'
         maven 'maven3'
+        git 'Default'
     }
 
     stages {
@@ -20,11 +21,18 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                bat 'mvn clean package'
-            }
-        }
+        stage('Build with Maven (Docker)') {
+                    steps {
+                        bat '''
+                        docker run --rm ^
+                        -v %cd%:/app ^
+                        -v m2:/root/.m2 ^
+                        -w /app ^
+                        maven:3.9.6-eclipse-temurin-17 ^
+                        mvn clean package -DskipTests
+                        '''
+                    }
+                }
 
         stage('Test') {
             steps {
