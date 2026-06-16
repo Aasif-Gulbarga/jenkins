@@ -8,6 +8,10 @@ pipeline {
         CONTAINER_PORT = "8081"
     }
 
+    tools {
+        git 'Default'
+    }
+
     stages {
 
         stage('Checkout') {
