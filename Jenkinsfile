@@ -8,6 +8,7 @@ pipeline {
     }
 
     tools {
+        git 'Default'
         jdk 'jdk17'
         maven 'maven3'
     }
