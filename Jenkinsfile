@@ -1,9 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'maven:3.9.11-eclipse-temurin-17'
-        }
-    }
+    agent any
 
     stages {
         stage('Checkout') {
@@ -21,10 +17,7 @@ pipeline {
 
     post {
         success {
-            echo 'Spring Boot build successful!'
-        }
-        failure {
-            echo 'Build failed!'
+            echo 'Build successful!'
         }
     }
 }
