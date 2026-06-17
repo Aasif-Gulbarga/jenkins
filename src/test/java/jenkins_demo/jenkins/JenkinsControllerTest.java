@@ -29,6 +29,6 @@ public class JenkinsControllerTest {
         mockMvc.perform(get("/jenkis"))
             .andExpect(status()
                 .isOk())
-            .andExpect(content().string("Hello Jenkins!!!"));
+            .andExpect(content().string("Hello Jenkins!!!!"));
     }
 }
