@@ -1,26 +1,24 @@
 pipeline {
-    agent {
-        docker {
-            image 'maven:3.9.6-eclipse-temurin-17'
-        }
-    }
+    agent any
 
     stages {
-        stage('Checkout') {
+        stage('Verify') {
             steps {
-                checkout scm
-            }
-        }
-
-        stage('Build') {
-            steps {
-                sh 'mvn clean package -DskipTests'
+                sh 'java -version'
+                sh 'git --version'
+                sh 'mvn -version'
             }
         }
 
         stage('Test') {
             steps {
                 sh 'mvn test'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'mvn clean package -DskipTests'
             }
         }
     }
