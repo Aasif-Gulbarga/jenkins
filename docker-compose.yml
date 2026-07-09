@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  marklogic:
+    image: marklogicdb/marklogic-db:11.2.0-centos
+    container_name: marklogic
+
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+      - "8002:8002"
+      - "8010:8010"
+
+    environment:
+      MARKLOGIC_INIT: "true"
+      MARKLOGIC_ADMIN_USERNAME: admin
+      MARKLOGIC_ADMIN_PASSWORD: admin123
+      MARKLOGIC_WALLET_PASSWORD: admin123
+
+    volumes:
+      - marklogic-data:/var/opt/MarkLogic
+
+volumes:
+  marklogic-data:
