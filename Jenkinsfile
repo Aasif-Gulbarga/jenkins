@@ -39,7 +39,6 @@ pipeline {
 
                 docker run -d \
                     --name ${CONTAINER_NAME} \
-                    --network app-network \
                     -p 8081:8080 \
                     --restart unless-stopped \
                     ${IMAGE_NAME}:latest
@@ -55,6 +54,7 @@ pipeline {
                 '''
             }
         }
+    }
 
     post {
 
