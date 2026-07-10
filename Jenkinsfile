@@ -9,6 +9,14 @@ pipeline {
 
     stages {
 
+        stage('Cleanup') {
+            steps {
+                sh '''
+                docker image prune -f
+                '''
+            }
+        }
+
         stage('Build & Test') {
             steps {
                 sh 'mvn clean package'
