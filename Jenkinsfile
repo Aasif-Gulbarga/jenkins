@@ -39,6 +39,7 @@ pipeline {
 
                 docker run -d \
                     --name ${CONTAINER_NAME} \
+                    --network app-network \
                     -p 8081:8080 \
                     --restart unless-stopped \
                     ${IMAGE_NAME}:latest
@@ -49,12 +50,11 @@ pipeline {
         stage('Health Check') {
             steps {
                 sh '''
-                sleep 10
-                curl --fail http://localhost:8081/actuator/health
+                sleep 15
+                curl --fail http://host.docker.internal:8081/actuator/health
                 '''
             }
         }
-    }
 
     post {
 
