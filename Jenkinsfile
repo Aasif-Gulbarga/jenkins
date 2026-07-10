@@ -1,25 +1,67 @@
 pipeline {
+
     agent any
 
+    environment {
+        IMAGE_NAME = "springboot-jenkins"
+        CONTAINER_NAME = "springboot-app"
+    }
+
     stages {
-        stage('Verify') {
+
+        stage('Checkout') {
             steps {
-                sh 'java -version'
-                sh 'git --version'
-                sh 'mvn -version'
+                checkout scm
             }
         }
 
-        stage('Test') {
+        stage('Build & Test') {
             steps {
-                sh 'mvn test'
+                sh 'mvn clean package'
             }
         }
 
-        stage('Build') {
+        stage('Build Docker Image') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                sh '''
+                docker build -t ${IMAGE_NAME}:latest .
+                '''
             }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh '''
+                docker stop ${CONTAINER_NAME} || true
+                docker rm ${CONTAINER_NAME} || true
+
+                docker run -d \
+                    --name ${CONTAINER_NAME} \
+                    -p 8081:8080 \
+                    --restart unless-stopped \
+                    ${IMAGE_NAME}:latest
+                '''
+            }
+        }
+
+        stage('Health Check') {
+            steps {
+                sh '''
+                sleep 10
+                curl --fail http://localhost:8081/actuator/health
+                '''
+            }
+        }
+    }
+
+    post {
+
+        success {
+            echo 'Application deployed successfully!'
+        }
+
+        failure {
+            echo 'Deployment failed!'
         }
     }
 }
