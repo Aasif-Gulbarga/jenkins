@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Employees>
+
+    <Employee>
+        <EmployeeId>1001</EmployeeId>
+        <FirstName>John</FirstName>
+        <LastName>Smith</LastName>
+        <Age>30</Age>
+        <Gender>Male</Gender>
+        <Department>Information Technology</Department>
+        <Designation>Software Engineer</Designation>
+        <Salary>75000</Salary>
+        <Email>john.smith@example.com</Email>
+        <Phone>9876543210</Phone>
+
+        <Address>
+            <HouseNumber>101</HouseNumber>
+            <Street>Park Avenue</Street>
+            <City>Mumbai</City>
+            <State>Maharashtra</State>
+            <Country>India</Country>
+            <ZipCode>400001</ZipCode>
+        </Address>
+    </Employee>
+
+    <Employee>
+        <EmployeeId>1002</EmployeeId>
+        <FirstName>Alice</FirstName>
+        <LastName>Johnson</LastName>
+        <Age>28</Age>
+        <Gender>Female</Gender>
+        <Department>Finance</Department>
+        <Designation>Financial Analyst</Designation>
+        <Salary>68000</Salary>
+        <Email>alice.johnson@example.com</Email>
+        <Phone>9876543211</Phone>
+
+        <Address>
+            <HouseNumber>102</HouseNumber>
+            <Street>MG Road</Street>
+            <City>Pune</City>
+            <State>Maharashtra</State>
+            <Country>India</Country>
+            <ZipCode>411001</ZipCode>
+        </Address>
+    </Employee>
+
+    <Employee>
+        <EmployeeId>1003</EmployeeId>
+        <FirstName>David</FirstName>
+        <LastName>Williams</LastName>
+        <Age>35</Age>
+        <Gender>Male</Gender>
+        <Department>Human Resources</Department>
+        <Designation>HR Manager</Designation>
+        <Salary>82000</Salary>
+        <Email>david.williams@example.com</Email>
+        <Phone>9876543212</Phone>
+
+        <Address>
+            <HouseNumber>103</HouseNumber>
+            <Street>Ring Road</Street>
+            <City>Delhi</City>
+            <State>Delhi</State>
+            <Country>India</Country>
+            <ZipCode>110001</ZipCode>
+        </Address>
+    </Employee>
+
+    <Employee>
+        <EmployeeId>1004</EmployeeId>
+        <FirstName>Priya</FirstName>
+        <LastName>Sharma</LastName>
+        <Age>29</Age>
+        <Gender>Female</Gender>
+        <Department>Marketing</Department>
+        <Designation>Marketing Executive</Designation>
+        <Salary>62000</Salary>
+        <Email>priya.sharma@example.com</Email>
+        <Phone>9876543213</Phone>
+
+        <Address>
+            <HouseNumber>104</HouseNumber>
+            <Street>Link Road</Street>
+            <City>Bengaluru</City>
+            <State>Karnataka</State>
+            <Country>India</Country>
+            <ZipCode>560001</ZipCode>
+        </Address>
+    </Employee>
+
+    <Employee>
+        <EmployeeId>1005</EmployeeId>
+        <FirstName>Rahul</FirstName>
+        <LastName>Patel</LastName>
+        <Age>32</Age>
+        <Gender>Male</Gender>
+        <Department>Sales</Department>
+        <Designation>Sales Manager</Designation>
+        <Salary>71000</Salary>
+        <Email>rahul.patel@example.com</Email>
+        <Phone>9876543214</Phone>
+
+        <Address>
+            <HouseNumber>105</HouseNumber>
+            <Street>Lake View</Street>
+            <City>Hyderabad</City>
+            <State>Telangana</State>
+            <Country>India</Country>
+            <ZipCode>500001</ZipCode>
+        </Address>
+    </Employee>
+
+</Employees>

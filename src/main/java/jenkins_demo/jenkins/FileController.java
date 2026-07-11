@@ -7,14 +7,22 @@ import org.springframework.web.bind.annotation.RestController;
 public class FileController {
 
     private final FileService service;
+    private final XmlService xmlservice;
 
-    public FileController(FileService service) {
+    public FileController(FileService service, XmlService xmlservice) {
         this.service = service;
+        this.xmlservice = xmlservice;
     }
 
-    @PostMapping("/upload")
+    @PostMapping("text/upload")
     public String upload() throws Exception {
 
         return service.uploadTextFile();
+    }
+
+    @PostMapping("xml/upload")
+    public String uploadxml() {
+
+        return xmlservice.uploadXml();
     }
 }
