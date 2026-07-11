@@ -5,9 +5,8 @@ import com.marklogic.client.document.TextDocumentManager;
 import com.marklogic.client.io.StringHandle;
 import org.springframework.stereotype.Service;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 @Service
 public class FileService {
@@ -20,20 +19,27 @@ public class FileService {
 
     public String uploadTextFile() throws Exception {
 
-        // Physical file path
-        Path path = Paths.get("C:/Demo_Projects/sample.txt");
+        try (
+            InputStream inputStream =
+                 getClass().getClassLoader().getResourceAsStream("sample.txt")) {
 
-        // Read file content
-        String content = Files.readString(path);
+            if (inputStream == null) {
+                return "sample.txt not found in resources folder";
+            }
 
-        // Save to MarkLogic
-        TextDocumentManager manager = client.newTextDocumentManager();
+            String content = new String(
+                inputStream.readAllBytes(),
+                StandardCharsets.UTF_8
+            );
 
-        manager.write(
-            "/files/sample.txt",
-            new StringHandle(content)
-        );
+            TextDocumentManager manager = client.newTextDocumentManager();
 
-        return "File uploaded successfully.";
+            manager.write(
+                "/files/sample.txt",
+                new StringHandle(content)
+            );
+
+            return "Text file uploaded successfully.";
+        }
     }
 }

@@ -1,0 +1,4 @@
+Employee Id : 101
+Employee Name : John
+Department : IT
+Salary : 50000
