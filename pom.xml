@@ -28,6 +28,8 @@
 	</scm>
 	<properties>
 		<java.version>17</java.version>
+		<sonar.projectKey>springboot-jenkins</sonar.projectKey>
+		<sonar.projectName>springboot-jenkins</sonar.projectName>
 	</properties>
 	<dependencies>
 		<dependency>
