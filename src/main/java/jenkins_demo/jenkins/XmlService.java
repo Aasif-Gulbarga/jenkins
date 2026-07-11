@@ -42,8 +42,8 @@ public class XmlService {
             return "XML uploaded successfully.";
 
         } catch (Exception e) {
-         log.error("Error uploading XML: {}", e.getMessage());
-            return e.getMessage();
+            log.error("Error uploading XML", e);
+                return e.getMessage();
+            }
         }
-    }
 }
