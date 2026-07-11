@@ -17,19 +17,22 @@ pipeline {
             }
         }
 
+
         stage('Build & Test') {
             steps {
-                sh 'mvn clean package'
+                sh '''
+                mvn clean package
+                mvn test
+                '''
             }
         }
-        stage('Quality Gate') {
-                    steps {
-                        timeout(time: 5, unit: 'MINUTES') {
-                            waitForQualityGate abortPipeline: true
-                        }
-                    }
-                }
+
+
         stage('SonarQube Analysis') {
+
+            environment {
+                SONAR_TOKEN = credentials('squ_38d633b05813756e557153b44a9d7c9441e1931d')
+            }
 
             steps {
 
@@ -38,26 +41,46 @@ pipeline {
                     sh '''
                     mvn sonar:sonar \
                     -Dsonar.projectKey=springboot-jenkins \
-                    -Dsonar.login=$SONAR_AUTH_TOKEN
+                    -Dsonar.token=$SONAR_TOKEN
                     '''
+                }
+            }
+        }
+
+
+        stage('Quality Gate') {
+
+            steps {
+
+                timeout(time: 5, unit: 'MINUTES') {
+
+                    waitForQualityGate abortPipeline: true
 
                 }
             }
         }
 
+
         stage('Build Docker Image') {
+
             steps {
+
                 sh '''
                 docker build -t ${IMAGE_NAME}:latest .
                 '''
             }
         }
 
+
         stage('Deploy') {
+
             steps {
+
                 sh '''
                 docker stop ${CONTAINER_NAME} || true
+
                 docker rm ${CONTAINER_NAME} || true
+
 
                 docker run -d \
                     --name ${CONTAINER_NAME} \
@@ -68,23 +91,31 @@ pipeline {
             }
         }
 
+
         stage('Health Check') {
+
             steps {
+
                 sh '''
                 sleep 15
+
                 curl --fail http://host.docker.internal:8081/actuator/health
                 '''
             }
         }
     }
 
+
     post {
 
         success {
+
             echo 'Application deployed successfully!'
         }
 
+
         failure {
+
             echo 'Deployment failed!'
         }
     }
