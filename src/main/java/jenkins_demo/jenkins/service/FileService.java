@@ -1,4 +1,4 @@
-package jenkins_demo.jenkins;
+package jenkins_demo.jenkins.service;
 
 import com.marklogic.client.DatabaseClient;
 import com.marklogic.client.document.TextDocumentManager;

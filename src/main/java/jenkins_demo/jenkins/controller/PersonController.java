@@ -1,5 +1,6 @@
-package jenkins_demo.jenkins;
+package jenkins_demo.jenkins.controller;
 
+import jenkins_demo.jenkins.service.PersonService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

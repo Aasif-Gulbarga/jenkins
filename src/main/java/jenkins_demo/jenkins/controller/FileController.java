@@ -1,5 +1,7 @@
-package jenkins_demo.jenkins;
+package jenkins_demo.jenkins.controller;
 
+import jenkins_demo.jenkins.service.FileService;
+import jenkins_demo.jenkins.service.XmlService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 

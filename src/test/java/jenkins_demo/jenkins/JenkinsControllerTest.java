@@ -1,5 +1,6 @@
 package jenkins_demo.jenkins;
 
+import jenkins_demo.jenkins.controller.JenkinsController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
